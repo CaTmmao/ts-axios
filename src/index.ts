@@ -1,5 +1,6 @@
 // axios 库入口文件
 
+import { axiosPromise } from './types/response'
 import { AxiosRequestConfig } from './types/request'
 import { processURL } from './helpers/url'
 import { processRequestData } from './helpers/data'
@@ -17,11 +18,11 @@ function processConfig(config: AxiosRequestConfig): void {
   config.data = processRequestData(data)
 }
 
-function axios(config: AxiosRequestConfig): void {
+function axios(config: AxiosRequestConfig): axiosPromise {
   // 发送请求前处理请求配置
   processConfig(config)
   // 发送请求
-  xhr(config)
+  return xhr(config)
 }
 
 export default axios
