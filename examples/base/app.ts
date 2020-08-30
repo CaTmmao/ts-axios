@@ -67,19 +67,43 @@ import axios from '../../src/index'
 /**
  * 测试发送请求前的 data 参数处理功能
  */
+// axios({
+//   method: 'post',
+//   url: '/base/post',
+//   data: {
+//     a: 1,
+//     b: 2
+//   }
+// })
+
+// const arr = new Int32Array([21, 31])
+
+// axios({
+//   method: 'post',
+//   url: '/base/buffer',
+//   data: arr
+// })
+
+/**
+ * 测试设置 headers
+ */
 axios({
   method: 'post',
   url: '/base/post',
+  headers: {
+    'content-type': 'application/json;',
+    Accept: 'application/json, text/plain'
+  },
   data: {
-    a: 1,
+    a: 2,
     b: 2
   }
 })
 
-const arr = new Int32Array([21, 31])
-
+const paramsString = 'q=URLUtils.searchParams&topic=api'
+const searchParams = new URLSearchParams(paramsString)
 axios({
   method: 'post',
-  url: '/base/buffer',
-  data: arr
+  url: '/base/post',
+  data: searchParams
 })
