@@ -3,6 +3,7 @@
 import { AxiosRequestConfig } from './types/index'
 import { processURL } from './helpers/url'
 import { processRequestData } from './helpers/data'
+import { processHeaders } from './helpers/headers'
 import xhr from './xhr'
 
 /**
@@ -10,8 +11,9 @@ import xhr from './xhr'
  * @param config 请求配置
  */
 function processConfig(config: AxiosRequestConfig): void {
-  let {url, data, params} = config
+  let { url, data, params, headers = {} } = config
   config.url = processURL(url, params)
+  processHeaders(headers, data)
   config.data = processRequestData(data)
 }
 

@@ -23,4 +23,5 @@ export interface AxiosRequestConfig {
   method?: Methods // 请求方法，默认为 get
   params?: any // 参数，请求方法为 get 时使用
   data?: any // 参数，请求方法为 post 时使用
+  headers?: any // 请求头
 }
