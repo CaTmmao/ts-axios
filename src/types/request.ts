@@ -1,4 +1,6 @@
-// 项目所有公共类
+/**
+ * 发送请求相关接口
+ */
 
 // 请求方法
 export type Methods =
@@ -17,7 +19,7 @@ export type Methods =
   | 'OPTIONS'
   | 'DELETE'
 
-// 请求配置
+// 请求发送的配置
 export interface AxiosRequestConfig {
   url: string // 请求地址
   method?: Methods // 请求方法，默认为 get

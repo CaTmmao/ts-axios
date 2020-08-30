@@ -1,6 +1,6 @@
 // 处理 axios 请求逻辑
 
-import { AxiosRequestConfig } from './types/index'
+import { AxiosRequestConfig } from './types/request'
 export default function xhr(config: AxiosRequestConfig): void {
   const { url, method = 'GET', data = null, headers } = config
 

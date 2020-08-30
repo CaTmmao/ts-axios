@@ -1,6 +1,6 @@
 // axios 库入口文件
 
-import { AxiosRequestConfig } from './types/index'
+import { AxiosRequestConfig } from './types/request'
 import { processURL } from './helpers/url'
 import { processRequestData } from './helpers/data'
 import { processHeaders } from './helpers/headers'
