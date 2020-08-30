@@ -11,7 +11,7 @@ import { isPlainObject } from './util'
  * 需要把对象转换成 json 字符串才可以，json 字符串就是上面支持的 USVString）
  * @param data 请求参数 data
  */
-export function transformRequest(data: any): any {
+export function processRequestData(data: any): any {
   // 是普通对象 如 {a:1}
   if (isPlainObject(data)) {
     return JSON.stringify(data)

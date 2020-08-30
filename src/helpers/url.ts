@@ -14,7 +14,7 @@ function encode(val: string): string {
  * @param params 发送 get 请求时传入的参数  （如: params: {pwd:22,name:catmmao}）
  * @returns url 拼接后的请求地址  （如: http://localhost:8080/simple/get?pwd=22&name=catmmao）
  */
-export function buildURL(url: string, params?: any): string {
+export function processURL(url: string, params?: any): string {
   // 没传参数原样返回 url
   if (!params) return url
 
