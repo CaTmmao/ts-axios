@@ -4,8 +4,8 @@ import { AxiosRequestConfig } from './types/index'
 export default function xhr(config: AxiosRequestConfig): void {
   const { url, method = 'GET', data = null } = config
 
-  let xhr = new XMLHttpRequest()
+  let request = new XMLHttpRequest()
 
-  xhr.open(method.toLocaleUpperCase(), url) // 初始化一个请求
-  xhr.send(data) // 发送请求
+  request.open(method.toLocaleUpperCase(), url) // 初始化一个请求
+  request.send(data) // 发送请求
 }
