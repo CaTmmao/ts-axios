@@ -2,6 +2,7 @@
 
 import { axiosPromise, ResponseData } from './types/response'
 import { AxiosRequestConfig } from './types/request'
+import {parseHeaders} from './helpers/headers'
 
 export default function xhr(config: AxiosRequestConfig): axiosPromise {
   return new Promise(resolve => {
@@ -35,7 +36,7 @@ export default function xhr(config: AxiosRequestConfig): axiosPromise {
           data: responseType === 'text' ? request.responseText : request.response,
           status: request.status,
           statusText: request.statusText,
-          headers: request.getAllResponseHeaders(),
+          headers: parseHeaders(request.getAllResponseHeaders()),
           config,
           request
         }

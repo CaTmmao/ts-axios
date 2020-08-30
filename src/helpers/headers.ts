@@ -5,6 +5,29 @@
 import { isPlainObject } from '../helpers/util'
 
 /**
+ * 将字符串形式的请求头转为对象格式
+ * （XMLHttpRequest.getAllResponseHeaders() 方法获取的 headers 内容是字符串，为查看方便，转为对象格式）
+ * @param headers 请求头字符串
+ */
+export function parseHeaders(headers: string): any {
+  let result = Object.create(null)
+
+  if (!headers) return result
+
+  headers.split('\r\n').forEach(item => {
+    let [key, value] = item.split(':')
+    if (!key) return
+
+    key = key.trim()
+    value = value.trim()
+
+    result[key] = value
+  })
+
+  return result
+}
+
+/**
  * 规范请求头名称（规范大小写）
  * @param headers 请求头对象
  * @param normalizeName 要规范的请求头名称 （如： content-type 改为 Content-Type，这里传入 Content-Type）
