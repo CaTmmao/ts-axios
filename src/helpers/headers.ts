@@ -25,14 +25,20 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
  * @param headers 请求头
  * @param data 发送 post 请求时传入的请求体
  */
-export function processHeaders(headers: any, data: any): void {
+export function processHeaders(headers: any, data: any): any {
   /**
    * 如果发送 post 请求时传入的请求体是对象，那么需要把 Content-Type 改为 application/json，否则服务端无法接收到
    */
   // 先规范化请求头名称便于后续查找
   normalizeHeaderName(headers, 'Content-Type')
-  // 传入的 data 参数是对象，同时客服端未设置 Content-Type，那就我设置
-  if (isPlainObject(data) && !headers['Content-Type']) {
+
+  // 传入的 data 参数是对象，同时客服端未设置 Content-Type 为 application/json，那就我设置
+  if (
+    isPlainObject(data) &&
+    (!headers['Content-Type'] || headers['Content-Type'].indexOf('application/json') === -1)
+  ) {
     headers['Content-Type'] = 'application/json;charset=utf-8'
   }
+
+  return headers
 }

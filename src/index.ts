@@ -13,7 +13,7 @@ import xhr from './xhr'
 function processConfig(config: AxiosRequestConfig): void {
   let { url, data, params, headers = {} } = config
   config.url = processURL(url, params)
-  processHeaders(headers, data)
+  config.headers = processHeaders(headers, data)
   config.data = processRequestData(data)
 }
 
