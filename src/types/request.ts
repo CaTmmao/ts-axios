@@ -27,4 +27,5 @@ export interface AxiosRequestConfig {
   data?: any // 参数，请求方法为 post 时使用
   headers?: any // 请求头
   responseType?: XMLHttpRequestResponseType // 要求服务端返回的数据类型
+  timeout?: number // 请求超时时间（毫秒）
 }
