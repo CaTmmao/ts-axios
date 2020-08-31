@@ -1,5 +1,6 @@
 // axios 库入口文件
 
+export {AxiosRequestError} from './types/error'
 import { axiosPromise } from './types/response'
 import { AxiosRequestConfig } from './types/request'
 import { processURL } from './helpers/url'
