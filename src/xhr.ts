@@ -2,7 +2,8 @@
 
 import { axiosPromise, ResponseData } from './types/response'
 import { AxiosRequestConfig } from './types/request'
-import {parseHeaders} from './helpers/headers'
+import { parseHeaders } from './helpers/headers'
+import { createAxiosError } from './helpers/error'
 
 export default function xhr(config: AxiosRequestConfig): axiosPromise {
   return new Promise((resolve, reject) => {
@@ -42,21 +43,28 @@ export default function xhr(config: AxiosRequestConfig): axiosPromise {
         // XMLHttpRequest errors（触发 error/timeout 事件）
         if (status === 0) return
 
+        const res: ResponseData = {
+          data: responseType === 'text' ? request.responseText : request.response,
+          status: status,
+          statusText: request.statusText,
+          headers: parseHeaders(request.getAllResponseHeaders()),
+          config,
+          request
+        }
+
         // 响应成功
         if (status >= 200 && status < 300) {
-          const res: ResponseData = {
-            data: responseType === 'text' ? request.responseText : request.response,
-            status: status,
-            statusText: request.statusText,
-            headers: parseHeaders(request.getAllResponseHeaders()),
-            config,
-            request
-          }
-
           resolve(res)
         } else {
           // 响应失败
-          reject(new Error(`Request failed with status code ${status}`))
+          reject(
+            createAxiosError(
+              String(new Error(`Request failed with status code ${status}`)),
+              request,
+              config,
+              res
+            )
+          )
         }
       }
     }
@@ -66,12 +74,14 @@ export default function xhr(config: AxiosRequestConfig): axiosPromise {
      */
     // 网络错误
     request.onerror = () => {
-      reject(new Error('Network Error'))
+      reject(createAxiosError(String(new Error('Network Error')), request, config))
     }
 
     // 超时错误（请求发送后超过某个时间仍没有收到响应，触发该事件）
     request.ontimeout = () => {
-      reject(new Error(`Timeout of ${timeout} ms exceeded`))
+      reject(
+        createAxiosError(String(new Error(`Timeout of ${timeout} ms exceeded`)), request, config)
+      )
     }
 
     request.send(data) // 发送请求
