@@ -90,20 +90,19 @@ import axios from '../../src/index'
 axios({
   method: 'post',
   url: '/base/post',
-  headers: {
-    'content-type': 'application/json;',
-    Accept: 'application/json, text/plain'
-  },
   data: {
     a: 2,
     b: 2
-  }
+  },
+  responseType: 'json'
+}).then(res => {
+  console.log(res)
 })
 
-const paramsString = 'q=URLUtils.searchParams&topic=api'
-const searchParams = new URLSearchParams(paramsString)
-axios({
-  method: 'post',
-  url: '/base/post',
-  data: searchParams
-})
+// const paramsString = 'q=URLUtils.searchParams&topic=api'
+// const searchParams = new URLSearchParams(paramsString)
+// axios({
+//   method: 'post',
+//   url: '/base/post',
+//   data: searchParams
+// })
