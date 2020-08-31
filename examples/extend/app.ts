@@ -10,16 +10,25 @@ axios({
   console.log(res)
 })
 
-axios.get('/extend/get')
+axios('/extend/post', {
+  method: 'post',
+  data: {
+    msg: 'hello2'
+  }
+}).then(res => {
+  console.log(res)
+})
 
-axios.options('/extend/options')
+// axios.get('/extend/get')
 
-axios.delete('/extend/delete')
+// axios.options('/extend/options')
 
-axios.head('/extend/head')
+// axios.delete('/extend/delete')
 
-axios.post('/extend/post', { msg: 'post' })
+// axios.head('/extend/head')
 
-axios.put('/extend/put', { msg: 'put' })
+// axios.post('/extend/post', { msg: 'post' })
 
-axios.patch('/extend/patch', { msg: 'patch' })
+// axios.put('/extend/put', { msg: 'put' })
+
+// axios.patch('/extend/patch', { msg: 'patch' })
