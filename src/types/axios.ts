@@ -20,5 +20,8 @@ export interface AxiosClass {
 }
 
 export interface InstanceAxios extends AxiosClass {
+  // 对应 axios(config)
   (config: AxiosRequestConfig): axiosPromise
+  // 对应 axios('/router', config)
+  (url: string, config: AxiosRequestConfig): axiosPromise
 }

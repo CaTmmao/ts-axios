@@ -4,7 +4,19 @@ import dispatchFetch from './dispatchFetch'
 import { Methods } from '../types/request'
 
 export default class Axios {
-  request(config: AxiosRequestConfig): axiosPromise {
+  request(url: any, config?: any): axiosPromise {
+    // 适用于 axios('/router') 或者 axios('/router', config)
+    if (typeof url === 'string') {
+      if (!config) {
+        config = {}
+      }
+
+      config.url = url
+    } else {
+      // 适用于 axios(config) 或者 axios.request(config)
+      config = url
+    }
+
     return dispatchFetch(config)
   }
 
