@@ -16,14 +16,17 @@ export default function xhr(config: AxiosRequestConfig): axiosPromise {
       request.responseType = responseType
     }
 
-    request.open(method.toLocaleUpperCase(), url) // 初始化一个请求
+    // 初始化一个请求
+    request.open(method.toLocaleUpperCase(), url)
 
     // 设置超时时间
     if (timeout) {
       request.timeout = timeout
     }
 
-    // 设置请求头
+    /**
+     * 设置请求头
+     */
     if (headers) {
       Object.keys(headers).forEach(name => {
         // 没有请求体，就不设置 content-type
@@ -34,7 +37,9 @@ export default function xhr(config: AxiosRequestConfig): axiosPromise {
       })
     }
 
-    // 返回数据
+    /**
+     * 返回数据
+     */
     request.onreadystatechange = () => {
       // 请求操作处理完成（结果包括成功响应/失败）
       if (request.readyState === 4) {
@@ -84,6 +89,7 @@ export default function xhr(config: AxiosRequestConfig): axiosPromise {
       )
     }
 
-    request.send(data) // 发送请求
+    // 发送请求
+    request.send(data)
   })
 }
