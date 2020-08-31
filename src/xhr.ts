@@ -17,7 +17,7 @@ export default function xhr(config: AxiosRequestConfig): axiosPromise {
     }
 
     // 初始化一个请求
-    request.open(method.toLocaleUpperCase(), url)
+    request.open(method.toLocaleUpperCase(), url!)
 
     // 设置超时时间
     if (timeout) {
