@@ -21,7 +21,7 @@ export type Methods =
 
 // 请求发送的配置
 export interface AxiosRequestConfig {
-  url: string // 请求地址
+  url?: string // 请求地址
   method?: Methods // 请求方法，默认为 get
   params?: any // 参数，请求方法为 get 时使用
   data?: any // 参数，请求方法为 post 时使用

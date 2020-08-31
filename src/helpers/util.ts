@@ -21,3 +21,16 @@ export function isObject(val: any): val is Object {
 export function isPlainObject(val: any): val is Object {
   return toString.call(val) === '[object Object]'
 }
+
+/**
+ * 继承属性
+ * @param to 赋值目标
+ * @param from 需继承的对象
+ */
+export function extend<T, U>(to: T, from: U): T & U {
+  for (let key in from) {
+    ;(to as T & U)[key] = (from as T & U)[key]
+  }
+
+  return to as T & U
+}
