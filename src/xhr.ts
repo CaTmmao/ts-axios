@@ -12,9 +12,7 @@ export default function xhr(config: AxiosRequestConfig): axiosPromise {
     let request = new XMLHttpRequest()
 
     // 规定返回的数据类型
-    if (responseType) {
-      request.responseType = responseType
-    }
+    request.responseType = responseType || 'json'
 
     // 初始化一个请求
     request.open(method.toLocaleUpperCase(), url!)
