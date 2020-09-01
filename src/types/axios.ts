@@ -1,7 +1,10 @@
 import { AxiosRequestConfig } from './request'
 import { axiosPromise } from './response'
+import { interceptorType } from '../core/axios'
 
 export interface AxiosClass {
+  interceptors: interceptorType
+
   request(config: AxiosRequestConfig): axiosPromise
 
   get(url: string, config?: AxiosRequestConfig): axiosPromise

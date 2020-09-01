@@ -1,9 +1,23 @@
-import { AxiosRequestConfig } from '../types/request'
+import { AxiosRequestConfig } from './../types/request'
+import { ResponseData } from './../types/response'
 import { axiosPromise } from '../types/response'
 import dispatchFetch from './dispatchFetch'
 import { Methods } from '../types/request'
+import { resolveFn, rejectFn, InterceptorMethods } from '../types/interceptor'
+
+// promise 拦截器链
+export interface promiseChain {
+  resolved: resolveFn | ((config: AxiosRequestConfig) => axiosPromise)
+  rejected?: rejectFn
+}
 
 export default class Axios {
+  // 拦截器
+  interceptors = {
+    request: new InterceptorMethods<AxiosRequestConfig>(),
+    response: new InterceptorMethods<ResponseData>()
+  }
+
   request(url: any, config?: any): axiosPromise {
     // 适用于 axios('/router') 或者 axios('/router', config)
     if (typeof url === 'string') {
@@ -17,7 +31,39 @@ export default class Axios {
       config = url
     }
 
-    return dispatchFetch(config)
+    /**
+     * 拦截器处理
+     */
+    // 将拦截器和发送请求方法组合到 promise 链中
+    let promiseChain: promiseChain[] = [
+      {
+        resolved: dispatchFetch,
+        rejected: undefined
+      }
+    ]
+
+    // 将请求拦截器加入 promise链 中
+    this.interceptors.request.interceptors.forEach(item => {
+      if (item) {
+        promiseChain.unshift(item)
+      }
+    })
+
+    // 将响应拦截器加入 promise链 中
+    this.interceptors.response.interceptors.forEach(item => {
+      if (item) {
+        promiseChain.push(item)
+      }
+    })
+
+    // 按照顺序执行 promise 链上的拦截器及请求方法
+    let promise = Promise.resolve(config)
+    promiseChain.forEach((item: promiseChain) => {
+      let { resolved, rejected } = item
+      promise = promise.then(resolved, rejected)
+    })
+
+    return promise
   }
 
   // 适用于 get head options delete
