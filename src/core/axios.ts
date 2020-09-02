@@ -1,14 +1,14 @@
 import { AxiosRequestConfig } from './../types/request'
 import { ResponseData } from './../types/response'
-import { axiosPromise } from '../types/response'
+import { AxiosPromise } from '../types/response'
 import dispatchFetch from './dispatchFetch'
 import { Methods } from '../types/request'
-import { resolveFn, rejectFn, InterceptorMethods } from '../types/interceptor'
+import { ResolveFn, RejectFn, InterceptorMethods } from '../types/interceptor'
 
 // promise 拦截器链
-export interface promiseChain {
-  resolved: resolveFn | ((config: AxiosRequestConfig) => axiosPromise)
-  rejected?: rejectFn
+export interface PromiseChain {
+  resolved: ResolveFn | ((config: AxiosRequestConfig) => AxiosPromise)
+  rejected?: RejectFn
 }
 
 export default class Axios {
@@ -18,7 +18,7 @@ export default class Axios {
     response: new InterceptorMethods<ResponseData>()
   }
 
-  request(url: any, config?: any): axiosPromise {
+  request(url: any, config?: any): AxiosPromise {
     // 适用于 axios('/router') 或者 axios('/router', config)
     if (typeof url === 'string') {
       if (!config) {
@@ -35,7 +35,7 @@ export default class Axios {
      * 拦截器处理
      */
     // 将拦截器和发送请求方法组合到 promise 链中
-    let promiseChain: promiseChain[] = [
+    let promiseChain: PromiseChain[] = [
       {
         resolved: dispatchFetch,
         rejected: undefined
@@ -58,7 +58,7 @@ export default class Axios {
 
     // 按照顺序执行 promise 链上的拦截器及请求方法
     let promise = Promise.resolve(config)
-    promiseChain.forEach((item: promiseChain) => {
+    promiseChain.forEach((item: PromiseChain) => {
       let { resolved, rejected } = item
       promise = promise.then(resolved, rejected)
     })
@@ -67,7 +67,7 @@ export default class Axios {
   }
 
   // 适用于 get head options delete
-  _requestWithoutData(url: string, method: Methods, config?: AxiosRequestConfig): axiosPromise {
+  _requestWithoutData(url: string, method: Methods, config?: AxiosRequestConfig): AxiosPromise {
     return this.request(
       Object.assign(config || {}, {
         url,
@@ -82,7 +82,7 @@ export default class Axios {
     method: Methods,
     data?: any,
     config?: AxiosRequestConfig
-  ): axiosPromise {
+  ): AxiosPromise {
     return this.request(
       Object.assign(config || {}, {
         url,
@@ -92,31 +92,31 @@ export default class Axios {
     )
   }
 
-  get(url: string, config?: AxiosRequestConfig): axiosPromise {
+  get(url: string, config?: AxiosRequestConfig): AxiosPromise {
     return this._requestWithoutData(url, 'get', config)
   }
 
-  head(url: string, config?: AxiosRequestConfig): axiosPromise {
+  head(url: string, config?: AxiosRequestConfig): AxiosPromise {
     return this._requestWithoutData(url, 'head', config)
   }
 
-  options(url: string, config?: AxiosRequestConfig): axiosPromise {
+  options(url: string, config?: AxiosRequestConfig): AxiosPromise {
     return this._requestWithoutData(url, 'options', config)
   }
 
-  delete(url: string, config?: AxiosRequestConfig): axiosPromise {
+  delete(url: string, config?: AxiosRequestConfig): AxiosPromise {
     return this._requestWithoutData(url, 'delete', config)
   }
 
-  post(url: string, data?: any, config?: AxiosRequestConfig): axiosPromise {
+  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
     return this._requestWithData(url, 'post', data, config)
   }
 
-  put(url: string, data?: any, config?: AxiosRequestConfig): axiosPromise {
+  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
     return this._requestWithData(url, 'put', data, config)
   }
 
-  patch(url: string, data?: any, config?: AxiosRequestConfig): axiosPromise {
+  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise {
     return this._requestWithData(url, 'patch', data, config)
   }
 }

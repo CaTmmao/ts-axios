@@ -15,4 +15,4 @@ export interface ResponseData {
 }
 
 // axios 响应返回的 promise
-export interface axiosPromise extends Promise<ResponseData> {}
+export interface AxiosPromise extends Promise<ResponseData> {}

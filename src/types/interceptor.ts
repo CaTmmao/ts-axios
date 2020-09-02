@@ -1,20 +1,20 @@
 // 拦截器 resolve 参数接口
-export interface resolveFn<T = any> {
+export interface ResolveFn<T = any> {
   (val: T): T
 }
 
 // 拦截器 reject 参数接口
-export interface rejectFn {
+export interface RejectFn {
   (err: any): any
 }
 
 // 拦截器方法（同时适用于 请求拦截器&响应拦截器）
 export class InterceptorMethods<T> {
   // 拦截器数组（存放多个拦截器）
-  interceptors: ({ resolved: resolveFn<T>; rejected?: rejectFn } | null)[] = []
+  interceptors: ({ resolved: ResolveFn<T>; rejected?: RejectFn } | null)[] = []
 
   // 添加拦截器
-  use(resolved: resolveFn<T>, rejected?: rejectFn): number {
+  use(resolved: ResolveFn<T>, rejected?: RejectFn): number {
     this.interceptors.push({
       resolved,
       rejected

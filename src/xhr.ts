@@ -1,11 +1,11 @@
 // 处理 axios 请求逻辑
 
-import { axiosPromise, ResponseData } from './types/response'
+import { AxiosPromise, ResponseData } from './types/response'
 import { AxiosRequestConfig } from './types/request'
 import { parseHeaders } from './helpers/headers'
 import { createAxiosError } from './helpers/error'
 
-export default function xhr(config: AxiosRequestConfig): axiosPromise {
+export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     const { url, method = 'GET', data = null, headers, responseType, timeout } = config
 

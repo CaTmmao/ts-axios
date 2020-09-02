@@ -1,4 +1,4 @@
-import { axiosPromise } from '../types/response'
+import { AxiosPromise } from '../types/response'
 import { AxiosRequestConfig } from '../types/request'
 import { processURL } from '../helpers/url'
 import { processRequestData } from '../helpers/data'
@@ -16,7 +16,7 @@ function processConfig(config: AxiosRequestConfig): void {
   config.data = processRequestData(data)
 }
 
-function dispatchFetch(config: AxiosRequestConfig): axiosPromise {
+function dispatchFetch(config: AxiosRequestConfig): AxiosPromise {
   // 发送请求前处理请求配置
   processConfig(config)
   // 发送请求
